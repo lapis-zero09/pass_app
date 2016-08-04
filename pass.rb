@@ -126,42 +126,38 @@ def show_data(cursor)
   end
 end
 
-begin
-  @db = SQLite3::Database.new("/opt/pass_app/info.db")
+# begin
+  @db = SQLite3::Database.new("/opt/pass/info.db")
 
-  print("Enter the YOUR_NAME: ")
-  user = gets.chomp
-  point = @db.execute("SELECT * FROM user WHERE name = ?", user)
-  if point.length == 0
-    print("Enter the PASSWORD: ")
-    password = gets.chomp
-    point.each do |d|
-      if password == d[1]
-        print("e: exit, s: search, i: insert, d: delete, c: change\nEnter the value : ")
-        while str = gets.chomp
-          print("-----------------\n")
-          if str == "e"
-            break
-          elsif str == "s"
-            search
-          elsif str == "i"
-            insert
-          elsif str == "d"
-            delete
-          elsif str == "c"
-            update
-          end
-          print("-----------------\n")
-          print("e: exit, s: search, i: insert, d: delete, c: change\nEnter the value : ")
+  point = @db.execute("SELECT * FROM user WHERE name = ?", "lapis")
+  print("Enter the PASSWORD: ")
+  password = gets.chomp
+  point.each do |d|
+    if password == d[1]
+      print("e: exit, s: search, i: insert, d: delete, c: change\nEnter the value : ")
+      while str = gets.chomp
+        print("-----------------\n")
+        if str == "e"
+          break
+        elsif str == "s"
+          search
+        elsif str == "i"
+          insert
+        elsif str == "d"
+          delete
+        elsif str == "c"
+          update
+        else
+          puts "idiot?"
         end
-
+        print("-----------------\n")
+        print("e: exit, s: search, i: insert, d: delete, c: change\nEnter the value : ")
       end
-    end
 
-    @db.close
-  else
-    print("No such user")
+    end
   end
-rescue => e
-  p e
-end
+
+  @db.close
+# rescue => e
+  # p e
+# end
